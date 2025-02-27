@@ -1,0 +1,7 @@
+VIDEOS/
+testdata/
+# all python related git ignore
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
