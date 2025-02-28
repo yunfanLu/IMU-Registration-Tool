@@ -156,15 +156,8 @@ def registrate_one_group(GROUP_ROOT):
 
 
 def main(args):
-    import pudb
-    pudb.set_trace()
-
-    # GROUP_ROOT = "dataset/3-ComplexLight/IMUCalibrationRegistration/Registration/IMU-Test-1/"
-    # registrate_result = registrate_one_group(GROUP_ROOT)
-    # with open(join(GROUP_ROOT, "registrate_result.json"), "w") as f:
-    #     json.dump(registrate_result, f, indent=4)
-
-    # VIDEO_GROUP_ROOT = "dataset/3-ComplexLight/RoboticArm/DEBUG/"
+    # import pudb
+    # pudb.set_trace()
     VIDEO_GROUP_ROOT = FLAGS.video_group_root
 
     for group in tqdm(sorted(listdir(VIDEO_GROUP_ROOT))):
@@ -178,7 +171,4 @@ def main(args):
 
 
 if __name__ == "__main__":
-    import pudb
-
-    # pudb.set_trace()
     app.run(main)
