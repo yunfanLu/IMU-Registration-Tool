@@ -11,7 +11,7 @@ from registration import calibration as CALB
 
 VISUALIZATION = False
 
-ZOOM_SCALE = 5
+ZOOM_SCALE = 9
 
 
 def savitzky_golay_filter(imu, win_len=101, polyorder=2):

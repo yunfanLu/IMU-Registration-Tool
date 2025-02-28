@@ -11,6 +11,47 @@ from tqdm import tqdm
 import numpy as np
 
 
+def adjust_average_brightness(image, target_brightness):
+    # 转换为灰度图
+    if len(image.shape) == 3:
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    else:
+        gray = image.copy()
+
+    # 计算当前均值和极值
+    current_mean = np.mean(gray)
+    x_min = np.min(gray)
+    x_max = np.max(gray)
+
+    # 钳制目标亮度
+    target = np.clip(target_brightness, 0, 255)
+
+    # 处理所有像素相同的情况
+    if x_min == x_max:
+        delta = target - current_mean
+        adjusted = np.clip(gray.astype(np.int16) + delta, 0, 255).astype(np.uint8)
+        return adjusted
+
+    # 计算缩放因子a
+    a1 = (255 - target) / (x_max - current_mean)
+    a2 = target / (current_mean - x_min)
+    a = min(a1, a2)
+
+    # 计算偏移量b
+    b = target - a * current_mean
+
+    # 应用线性变换并钳制
+    adjusted = cv2.convertScaleAbs(gray, alpha=a, beta=b)
+
+    # 如果是彩色图像，则将调整后的灰度图转换回彩色
+    if len(image.shape) == 3:
+        # change the Y channel
+        yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
+        yuv[:, :, 0] = adjusted
+        adjusted = cv2.cvtColor(yuv, cv2.COLOR_YUV2BGR)
+
+    return adjusted
+
 def make_video_in_a_group(group_folder, videos, event_frames):
     info(f"Group: {group_folder}")
     info(f"  Videos: {videos}")
@@ -43,7 +84,9 @@ def make_video_in_a_group(group_folder, videos, event_frames):
             event = cv2.imread(event_path)
 
             # to make the frame with the same illumination by YUV ?
-            frame = frame * (average_illumination / np.mean(frame))
+            # frame = frame * (average_illumination / np.mean(frame))
+            # The above code is wrong, it will make some pixel value larger than 255
+            frame = adjust_average_brightness(frame, average_illumination)
 
             frame_with_text = np.zeros((H, W * 2, 3), dtype=np.uint8)
             frame_with_text[:260, :W, :] = frame

@@ -31,4 +31,4 @@ export PYTHONPATH="./":$PYTHONPATH
 
 # 4. Registration
 python ./registration/main.py \
-    --video_group_root="VIDEOS/"
+    --video_group_root="VIDEOS-3/"
