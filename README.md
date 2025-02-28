@@ -109,6 +109,27 @@ results/
 │   ├── V-1-to-0-merged.png     # IMU comparison plot
 ```
 
+Example of `registrate_result.json`: the alignment parameters for each pair of recordings.
+```json
+{
+    "s001-125000-2025_02_27_16_03_41": {
+        "start_index_of_imu": 2408,
+        "end_index_of_imu": 18210,
+        "start_timestamp": 1740643424149311.0,
+        "end_timestamp": 1740643439949963.0,
+        "time_duration": 15800652.0
+    },
+    "s001-250000-2025_02_27_16_03_02": {
+        "start_index_of_imu": 0,
+        "end_index_of_imu": 15802,
+        "start_timestamp": 1740643382750853.0,
+        "end_timestamp": 1740643398550491.0,
+        "time_duration": 15799638.0
+    }
+}
+```
+
+
 ## Configuration Parameters
 
 | Parameter | Default | Description |
