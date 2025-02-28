@@ -107,7 +107,6 @@ results/
 ├── Group-1/
 │   ├── registrate_result.json  # Alignment parameters
 │   ├── V-1-to-0-merged.png     # IMU comparison plot
-│   └── aligned_events/         # Time-synced event streams
 ```
 
 ## Configuration Parameters
